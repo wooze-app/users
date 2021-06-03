@@ -3,6 +3,7 @@ import secrets
 
 from app import database
 
+
 class Users(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     uuid = database.Column(database.String(15), unique=True, nullable=False)
@@ -20,9 +21,10 @@ class Credentials(object):
     def __init__(self, email, password):
         self.email = email
         self.password = password
-    
+
     def __repr__(self):
         return self.email
+
 
 class Assets(object):
     def __init__(self, avatar, banner):
@@ -31,6 +33,7 @@ class Assets(object):
 
     def __repr__(self):
         return str(self.avatar)
+
 
 class UniqueUserIdentifier(object):
     def __init__(self, length=8):
@@ -49,7 +52,8 @@ class UniqueUserIdentifier(object):
 
     def generate_identifier(self):
         alphabet = string.ascii_letters + string.digits
-        return ''.join(secrets.choice(alphabet) for i in range(self.length))
+        return "".join(secrets.choice(alphabet) for i in range(self.length))
+
 
 class RegisterUser(object):
     def __init__(self, username, credentials, assets):
@@ -71,17 +75,18 @@ class RegisterUser(object):
             email=self.credentials.email,
             password=self.credentials.password,
             avatar=self.assets.avatar,
-            banner=self.assets.banner
+            banner=self.assets.banner,
         )
 
         database.session.add(user)
         database.session.commit()
 
-
         return user
 
     def __find_username_availability(self, username):
-        usernames = [user.username for user in Users.query.order_by(Users.username).all()]
+        usernames = [
+            user.username for user in Users.query.order_by(Users.username).all()
+        ]
 
         return username in usernames
 

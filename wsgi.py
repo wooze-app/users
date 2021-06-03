@@ -8,11 +8,9 @@ from register import RegisterUserView
 from login import LoginUserView
 
 
-routes = ApplicationRoutes(app, {
-    "/" : IndexView,
-    "/register" : RegisterUserView,
-    "/login" : LoginUserView
-})
+routes = ApplicationRoutes(
+    app, {"/": IndexView, "/register": RegisterUserView, "/login": LoginUserView}
+)
 
 
 class ValidLocalPort(object):
@@ -25,8 +23,8 @@ class ValidLocalPort(object):
 
         while self.__is_port_open(port):
             last_character += 1
-            port = f'{port[:-1]}{last_character}'
-        
+            port = f"{port[:-1]}{last_character}"
+
         return port
 
     def __is_port_open(self, port):
@@ -37,6 +35,7 @@ class ValidLocalPort(object):
             return True
         except:
             return False
+
 
 if __name__ == "__main__":
     port = ValidLocalPort().return_closed_port()

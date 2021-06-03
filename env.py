@@ -1,5 +1,6 @@
 import os
 
+
 class SimpleEnvLoader(object):
     def __init__(self, directory, filename=".env"):
         self.path = os.path.join(directory, filename)
