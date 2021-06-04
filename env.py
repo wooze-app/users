@@ -11,7 +11,9 @@ class SimpleEnvLoader(object):
 
         with open(self.path, "r") as env_reader:
             data = env_reader.read()
-            return self.split_tokens(data.split("\n"))
+            tokens = self.split_tokens(data.split("\n"))
+            for token_key in tokens:
+                os.environ.setdefault(token_key, tokens.get(token_key))
 
     def split_tokens(self, data):
         variables = {}
