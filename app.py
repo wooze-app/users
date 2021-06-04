@@ -16,6 +16,7 @@ app.config.from_object(Config)
 app.permanent_session_lifetime = datetime.timedelta(minutes=int(600000))
 env = SimpleEnvLoader(os.path.dirname(__file__)).create_environment_variables()
 
+
 @app.before_request
 def make_session_permanent():
     session.permanent = True

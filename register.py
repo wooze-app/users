@@ -5,6 +5,8 @@ from flask import views, request, jsonify, session, Response
 from users import RegisterUser, Credentials, Assets
 
 import clint
+
+
 class RegisterUserView(views.MethodView):
     required_fields = ["username", "email", "password"]
 
@@ -16,21 +18,18 @@ class RegisterUserView(views.MethodView):
         if not valid:
             return jsonify(status=404, message="No required fields")
 
-        request_token_value = (data.get('token') or data.get('TOKEN')).strip()
+        request_token_value = (data.get("token") or data.get("TOKEN")).strip()
         print(clint.textui.colored.red(request_token_value))
         print(clint.textui.colored.green(token))
 
         if request_token_value != token:
-            return Response(json.dumps({
-                "message" : "Invalid token"
-            }), status=401)
+            return Response(json.dumps({"message": "Invalid token"}), status=401)
 
         username, email, password = self.find_credentials(data)
         register = RegisterUser(
             username, Credentials(email, password), Assets(str(None), str(None))
         ).register_new_user(username)
         print(session)
-
 
         if isinstance(register, str):
             return jsonify(status=200, message=register)
