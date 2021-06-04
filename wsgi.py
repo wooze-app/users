@@ -30,7 +30,7 @@ class ValidLocalPort(object):
     def __is_port_open(self, port):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            server.connect((ip, int(port)))
+            # server.connect((ip, int(port)))
             server.shutdown(2)
             return True
         except:
