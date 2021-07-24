@@ -34,7 +34,7 @@ class LoginUserView(views.MethodView):
     def post(self):
         values = dict(request.values)
         if not self.check_required_fields(values):
-            return jsonify(status=400, message="No required parameters")
+            return jsonify(status=404, message="No required parameters")
 
         login = AuthenticateUser(
             Credentials(values.get("email"), values.get("password"))
